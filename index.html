@@ -405,6 +405,35 @@ button.role{cursor:pointer;margin:0}
 .ck-crown{position:absolute;width:44%;height:44%;filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
 #ckBoard.disco .ck-sqs{animation:discoHue 1s linear infinite}
 #ckBoard.spin{animation:boardSpin 1.9s cubic-bezier(.5,0,.3,1)}
+#annUnder{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.evalbar{position:relative;height:16px;border-radius:5px;background:#2b2622;overflow:hidden;border:1px solid var(--line)}
+.evalbar i{position:absolute;left:0;top:0;bottom:0;background:#f3ead8;transition:width .45s cubic-bezier(.25,.8,.35,1)}
+.evalbar.flip{background:#f3ead8}.evalbar.flip i{background:#2b2622}
+.evalbar span{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--f-mono);font-size:11px;font-weight:700;color:var(--accent);text-shadow:0 0 3px #000}
+.moves button sup{font-weight:800;margin-left:2px;font-size:10px}
+.ana{background:var(--bg);border-radius:9px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.ana-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto auto;gap:10px;align-items:center;font-size:13px}
+.ana-row b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ana-row .acc{font-family:var(--f-display);font-weight:800;font-size:17px}
+.ana-c{font-family:var(--f-mono);font-weight:700;font-size:12px}
+.annpal-row{gap:10px}.annpal{display:flex;gap:6px;flex-wrap:wrap}
+.annpal button{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);padding:0}
+.annpal button.on{border-color:var(--fg);box-shadow:0 0 0 2px var(--accent)}
+.ac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.ac-grid label{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg);border-radius:9px;padding:6px 10px;font-weight:600;font-size:13px}
+.ac-grid input{width:38px;height:28px;border:0;padding:0;background:none}
+.mg-board{position:relative;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);aspect-ratio:1;width:100%;max-width:420px;border-radius:8px;overflow:hidden;align-self:center;user-select:none;touch-action:manipulation}
+.mg-sq{background:var(--sq-l);position:relative;cursor:pointer;display:grid;place-items:center;font-size:10px;font-weight:700;color:rgba(0,0,0,.35)}
+.mg-sq.d{background:var(--sq-d)}.mg-sq::before{content:attr(data-n)}
+.mg-sq.ok{animation:mgOk .45s}.mg-sq.bad{animation:mgBad .45s}
+@keyframes mgOk{0%{box-shadow:inset 0 0 0 100px rgba(134,179,107,.85)}100%{box-shadow:inset 0 0 0 100px rgba(134,179,107,0)}}
+@keyframes mgBad{0%{box-shadow:inset 0 0 0 100px rgba(215,89,76,.85)}100%{box-shadow:inset 0 0 0 100px rgba(215,89,76,0)}}
+.mg-sq.t::after{content:"";width:28%;height:28%;border-radius:50%;background:rgba(20,15,10,.25)}
+.kr-knight,.kr-star{position:absolute;left:0;top:0;width:12.5%;height:12.5%;transition:transform .2s cubic-bezier(.25,.8,.35,1);pointer-events:none}
+.kr-knight{filter:drop-shadow(0 3px 2px rgba(0,0,0,.3));z-index:2}
+.kr-star{display:grid;place-items:center;font-size:clamp(18px,4vw,30px);color:#f2c230;text-shadow:0 0 10px rgba(242,194,48,.8),0 2px 2px rgba(0,0,0,.4);animation:krPulse 1s infinite alternate}
+@keyframes krPulse{to{filter:brightness(1.3)}}
+.mg-hud{display:flex;align-items:center;gap:14px;justify-content:space-between}
+.mg-big{font-family:var(--f-display);font-size:30px;font-weight:800;color:var(--accent);min-width:90px}
 .tag.ok{color:var(--good)}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--fg);color:#1c1b18;font-weight:700;padding:10px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:99;max-width:calc(100% - 32px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
@@ -462,7 +491,7 @@ button.role{cursor:pointer;margin:0}
 </head>
 <body>
 
-<div class="splash" id="splash" role="status" aria-label="Tempo, made by ijetTNO"><div class="sp-mark"><svg viewBox="0 0 45 45" fill="#221604"><path d="M12 39.5h21l-1.2-4H13.2z"/><path d="M14.8 35.5l1.4-15.5h12.6l1.4 15.5z"/><path d="M13.5 20h18v-9.5h-4.2v3.2h-3.1v-3.2h-3.4v3.2h-3.1v-3.2h-4.2z"/></svg></div><div class="sp-name">Tempo</div><div class="sp-by">Made By <b>IjetTNO</b></div></div>
+<div class="splash" id="splash" role="status" aria-label="Tempo, made by ijetTNO"><div class="sp-mark"><svg viewBox="0 0 45 45" fill="#221604"><path d="M12 39.5h21l-1.2-4H13.2z"/><path d="M14.8 35.5l1.4-15.5h12.6l1.4 15.5z"/><path d="M13.5 20h18v-9.5h-4.2v3.2h-3.1v-3.2h-3.4v3.2h-3.1v-3.2h-4.2z"/></svg></div><div class="sp-name">Tempo</div><div class="sp-by">Made by<b>IjetTNO</b></div></div>
 <script>(function(){var s=document.getElementById('splash');var done=false;function hide(){if(done)return;done=true;s.classList.add('out');setTimeout(function(){s.hidden=true},600)}s.addEventListener('click',hide);setTimeout(hide,1700)})();</script>
 <div id="app">
   <nav class="rail" aria-label="Main">
@@ -470,6 +499,7 @@ button.role{cursor:pointer;margin:0}
     <button class="nav on" data-view="play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10M9 17h6l1 4H8z"/><circle cx="12" cy="7" r="3"/><path d="M10 10l-1 7h6l-1-7"/></svg>Play</button>
     <button class="nav" data-view="daily"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>Daily<span class="nbadge" id="navDailyBadge" hidden></span></button>
     <button class="nav" data-view="checkers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="9" rx="8" ry="3.5"/><path d="M4 9v5c0 1.9 3.6 3.5 8 3.5s8-1.6 8-3.5V9"/></svg>Checkers</button>
+    <button class="nav" data-view="games"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="11" rx="4"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r="1"/><circle cx="18" cy="13.5" r="1"/></svg>Minigames</button>
     <button class="nav" data-view="lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.5 15h9"/></svg>Mod Lab</button>
     <button class="nav" data-view="maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>Map Maker</button>
     <button class="nav" data-view="studio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>Game Studio</button>
@@ -478,13 +508,14 @@ button.role{cursor:pointer;margin:0}
     <button class="nav" data-view="admin" id="navAdmin" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Admin</button>
     <button class="nav" data-view="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>Settings &amp; Keys</button>
     <button class="acct" id="acctChip" data-view="profile"><span class="av" id="acctAv">?</span><span class="grow"><b id="acctName">Guest</b><small id="acctSub2">Not signed in</small></span></button>
-    <div class="rail-foot">Build 17 · Shift-click two squares for an arrow. <kbd>Ctrl</kbd>+<kbd>Z</kbd> takes back.</div>
+    <div class="rail-foot">Build 18 · Shift-click two squares for an arrow. <kbd>Ctrl</kbd>+<kbd>Z</kbd> takes back.</div>
   </nav>
   <main>
     <!-- PLAY -->
     <section class="view" id="view-play">
       <div class="arena">
         <div class="board-col">
+          <div class="evalbar" id="evalBar" hidden><i></i><span></span></div>
           <div class="pbar" id="barTop"><div class="avatar"></div><div class="pinfo"><div class="pname"></div><div class="caps"></div></div><div class="clock"></div></div>
           <div id="board">
             <div class="sqs" id="sqs"></div>
@@ -530,6 +561,7 @@ button.role{cursor:pointer;margin:0}
             <div class="row" id="pzBar" hidden><button class="btn" id="pzRetry" style="flex:1">Retry</button><button class="btn" id="pzNext" style="flex:1">Skip</button><button class="btn" id="pzAll" style="flex:1">All puzzles</button></div>
             <div class="rulemsg" id="ruleMsg" hidden></div>
             <div class="moves" id="moves"></div>
+            <div class="ana" id="anaBox" hidden></div>
             <div class="ctrls">
               <button class="btn" id="bStart" title="First move" aria-label="First move"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18l-6-6 6-6M7 6v12"/></svg></button>
               <button class="btn" id="bPrev" title="Back (←)" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -545,6 +577,8 @@ button.role{cursor:pointer;margin:0}
               <button class="btn" id="bDraw" style="flex:1">Draw</button>
               <button class="btn danger" id="bResign" style="flex:1">Resign</button>
             </div>
+            <div class="row"><button class="btn" id="bAnalyze" style="flex:1">📈 Analyze</button><button class="btn" id="bEngine" style="flex:1">🧠 Engine</button><button class="btn" id="bPgnCopy" style="flex:1" title="Copy the game as PGN">Copy PGN</button><button class="btn" id="bPgnSave" style="flex:1" title="Download the game as a PGN file">⬇ PGN</button></div>
+            <div class="row annpal-row"><span class="hint-t">Mark colour</span><div class="annpal" id="annPal"></div></div>
             <div id="drawOffer" class="row" hidden><span style="flex:1">Your opponent offers a draw.</span><button class="btn sm pri" id="drawYes">Accept</button><button class="btn sm" id="drawNo">Decline</button></div>
             <div id="rematchOffer" class="row" hidden><span style="flex:1">Your opponent wants a rematch.</span><button class="btn sm pri" id="rematchYes">Play again</button></div>
             <div class="row" id="oppFriend" hidden><span class="hint-t" id="oppFriendT" style="flex:1"></span><button class="btn sm pri" id="oppFriendBtn">Add friend</button></div>
@@ -757,6 +791,27 @@ button.role{cursor:pointer;margin:0}
       </div>
     </section>
 
+    <!-- MINIGAMES -->
+    <section class="view" id="view-games" hidden>
+      <div class="page-h"><div><h1>Minigames</h1><p>Quick games to train your eyes and have fun between matches.</p></div></div>
+      <div class="adgrid">
+        <div class="card"><div class="row" style="justify-content:space-between"><h3>🎯 Square Sprint</h3><span class="tag">Best <b id="spBest">0</b></span></div>
+          <div class="hint-t">A square name appears. Click it on the board as fast as you can. 30 seconds.</div>
+          <div class="mg-hud"><span class="mg-big" id="spTarget">Ready?</span><span><b id="spScore">0</b> points</span><span class="mono" id="spTime">30.0s</span></div>
+          <div class="mg-board" id="spBoard"></div>
+          <div class="row"><select id="spSide" style="width:auto"><option value="w">White's view</option><option value="b">Black's view</option></select><label class="row" style="gap:6px"><input type="checkbox" id="spCoords"> Show names</label><span style="flex:1"></span><button class="btn pri" id="spStart">Start</button></div>
+        </div>
+        <div class="card"><div class="row" style="justify-content:space-between"><h3>♞ Knight Rush</h3><span class="tag">Best <b id="krBest">–</b></span></div>
+          <div class="hint-t">Jump the knight to the star. Collect 10 stars as fast as you can.</div>
+          <div class="mg-hud"><span class="mg-big" id="krGot">0 / 10</span><span><b id="krMoves">0</b> moves</span><span class="mono" id="krTime">0.0s</span></div>
+          <div class="mg-board" id="krBoard"></div>
+          <div class="row"><span style="flex:1"></span><button class="btn pri" id="krStart">Start</button></div>
+        </div>
+        <div class="card"><h3>⚫ Checkers</h3><div class="hint-t">Bots, friends and online matches.</div><button class="btn" id="mgCheckers">Play checkers</button>
+          <h3>🧩 Puzzles</h3><div class="hint-t">40 checkmate puzzles and a new daily puzzle.</div><button class="btn" id="mgPuzzles">Open puzzles</button></div>
+      </div>
+    </section>
+
     <!-- STORE -->
     <section class="view" id="view-store" hidden>
       <div class="page-h"><div><h1>Store</h1><p>Maps, pieces and games made by players. Things you get show up in Play under "Board or game", and pieces land in your Mod Lab.</p></div><div class="row"><span class="tag ok credtag" id="stCredWrap" hidden>🪙 <b id="stCredits">0</b> credits</span><button class="btn" id="storeRefresh">Refresh</button></div></div>
@@ -882,18 +937,31 @@ button.role{cursor:pointer;margin:0}
         </div>
         <div class="card"><h3>Marking the board</h3>
           <div class="keys">
-            <span><kbd>Shift</kbd> + click, click</span><span>Draw an arrow between two squares</span>
+            <span><kbd>Shift</kbd> + click</span><span>Draw a small frame around a square</span>
+            <span><kbd>Shift</kbd> + click another square</span><span>Turn that frame into an arrow to the new square</span>
             <span><kbd>Ctrl</kbd> + click</span><span>Draw a circle on a square</span>
-            <span><kbd>Alt</kbd> + click</span><span>Mark a square red</span>
+            <span><kbd>Alt</kbd> + click</span><span>Colour a square in</span>
             <span>Right-drag / right-click</span><span>Arrow / circle, the classic way</span>
-            <span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd></span><span>Wipe every arrow, circle and mark (<kbd>Ctrl</kbd>+<kbd>S</kbd>+<kbd>Z</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> work too)</span>
-            <span>Opponent moves</span><span>All marks clear automatically</span>
-            <span><kbd>Ctrl</kbd> + <kbd>Z</kbd></span><span>Take back your last move</span>
+            <span><kbd>Ctrl</kbd> + <kbd>Z</kbd></span><span>Remove the last frame, arrow, circle or marked square</span>
+            <span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd></span><span>Delete every marking (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> works too)</span>
+            <span>Opponent moves</span><span>All markings clear automatically</span>
+            <span>↶ button</span><span>Take back your last move</span>
             <span><kbd>←</kbd> <kbd>→</kbd></span><span>Step through the moves</span>
             <span><kbd>Space</kbd></span><span>Replay the whole game move by move</span>
             <span><kbd>F</kbd></span><span>Flip the board</span>
-            <span><kbd>Esc</kbd></span><span>Cancel a selection or half-drawn arrow</span>
+            <span><kbd>Esc</kbd></span><span>Cancel a selection or a half-drawn arrow</span>
           </div>
+        </div>
+        <div class="card"><h3>Marking colours</h3>
+          <div class="ac-grid">
+            <label>Arrows<input type="color" id="ac_arrow"></label>
+            <label>Circles<input type="color" id="ac_circle"></label>
+            <label>Frames<input type="color" id="ac_frame"></label>
+            <label>Coloured squares<input type="color" id="ac_mark"></label>
+            <label>All at once<input type="color" id="ac_all" value="#e3962a"></label>
+          </div>
+          <button class="btn sm" id="ac_reset" style="align-self:flex-start">Reset colours</button>
+          <div class="hint-t">New markings use these colours. You can also pick a colour under the board's move list.</div>
         </div>
         <div class="card"><div class="row" style="justify-content:space-between"><h3>Admin</h3><button class="btn sm" id="adminOpen">Open admin panel</button></div></div>
       </div>
@@ -1517,8 +1585,6 @@ function paint(){
     el.classList.toggle('last',!!last&&(i===last.from||i===(last.castle?last.kTo:last.to)));
     el.classList.toggle('sel',i===sel);
     el.classList.toggle('chk',i===chk);
-    el.classList.toggle('mark',ann.marks.has(i));
-    el.classList.toggle('shift',i===shiftStart);
   }
   dotsEl.innerHTML='';
   if(sel>=0&&settings.dots){
@@ -1527,33 +1593,63 @@ function paint(){
   }
   boardEl.classList.toggle('hide-co',!settings.coords);
 }
-function renderAll(anim){const s=viewState();if(!s)return;renderPieces(s,anim);paint();drawAnn();renderBars();renderMoves();renderStatus()}
+let lastViewPly=-1;
+function renderAll(anim){const s=viewState();if(!s)return;renderPieces(s,anim);paint();renderBars();renderMoves();renderStatus();if(window.TempoPro){showBest();evalBar();const vp=viewPly();if(vp!==lastViewPly){lastViewPly=vp;liveEngine()}}else drawAnn()}
 
 /* ---------------- annotations ---------------- */
-const ann={arrows:new Map(),circles:new Set(),marks:new Set(),hint:null};
+const ann={arrows:new Map(),circles:new Map(),marks:new Map(),frames:new Map(),hint:null,best:null,stack:[]};
 let shiftStart=-1;
-function toggleArrow(a,b){const k=a+'-'+b;if(ann.arrows.has(k))ann.arrows.delete(k);else ann.arrows.set(k,[a,b]);drawAnn()}
-function toggleCircle(i){ann.circles.has(i)?ann.circles.delete(i):ann.circles.add(i);drawAnn()}
-function toggleMark(i){ann.marks.has(i)?ann.marks.delete(i):ann.marks.add(i);paint()}
-function clearAnn(){ann.arrows.clear();ann.circles.clear();ann.marks.clear();ann.hint=null;shiftStart=-1;drawAnn();paint()}
-function arrowSvg(a,b,color){
+const ANN_DEF={arrow:'#e3962a',circle:'#e3a43c',frame:'#e3a43c',mark:'#d64034'};
+function annColor(k){const c=(settings.annColors||{})[k];return /^#[0-9a-fA-F]{6}$/.test(c||'')?c:ANN_DEF[k]}
+function annMap(kind){return ({arrow:ann.arrows,circle:ann.circles,mark:ann.marks,frame:ann.frames})[kind]}
+function annDo(ops){
+  // ops: [{kind,key,val|null}]  val null = remove. Records the inverse so Ctrl+Z can undo it.
+  const inv=[];
+  for(const o of ops){const m=annMap(o.kind),had=m.has(o.key)?m.get(o.key):null;inv.push({kind:o.kind,key:o.key,val:had});if(o.val===null)m.delete(o.key);else m.set(o.key,o.val)}
+  ann.stack.push(inv);if(ann.stack.length>200)ann.stack.shift();
+  drawAnn();
+}
+function toggleArrow(a,b){const k=a+'-'+b;annDo([{kind:'arrow',key:k,val:ann.arrows.has(k)?null:{a,b,c:annColor('arrow')}}])}
+function toggleCircle(i){annDo([{kind:'circle',key:i,val:ann.circles.has(i)?null:annColor('circle')}])}
+function toggleMark(i){annDo([{kind:'mark',key:i,val:ann.marks.has(i)?null:annColor('mark')}])}
+function shiftClick(sq){
+  if(shiftStart<0){annDo([{kind:'frame',key:sq,val:ann.frames.has(sq)?null:annColor('frame')}]);shiftStart=ann.frames.has(sq)?sq:-1;return}
+  if(sq===shiftStart){annDo([{kind:'frame',key:sq,val:null}]);shiftStart=-1;return}
+  const a=shiftStart,k=a+'-'+sq;shiftStart=-1;
+  annDo([{kind:'frame',key:a,val:null},{kind:'arrow',key:k,val:ann.arrows.has(k)?null:{a,b:sq,c:annColor('arrow')}}]);
+}
+function undoAnn(){
+  if(ann.hint||ann.best){ann.hint=null;drawAnn();return true}
+  const inv=ann.stack.pop();if(!inv)return false;
+  for(let i=inv.length-1;i>=0;i--){const o=inv[i],m=annMap(o.kind);if(o.val===null)m.delete(o.key);else m.set(o.key,o.val)}
+  shiftStart=-1;drawAnn();return true;
+}
+function clearAnn(){ann.arrows.clear();ann.circles.clear();ann.marks.clear();ann.frames.clear();ann.hint=null;ann.stack=[];shiftStart=-1;drawAnn();paint()}
+function arrowSvg(a,b,color,op){
   const [ac,ar]=colRow(a),[bc,br]=colRow(b);
   const A=[ac+.5,ar+.5],B=[bc+.5,br+.5];
   const dx=bc-ac,dy=br-ar;let corner=null;
   if((Math.abs(dx)===1&&Math.abs(dy)===2)||(Math.abs(dx)===2&&Math.abs(dy)===1))corner=Math.abs(dx)>Math.abs(dy)?[B[0],A[1]]:[A[0],B[1]];
   const from=corner||A;const vx=B[0]-from[0],vy=B[1]-from[1],len=Math.hypot(vx,vy)||1,ux=vx/len,uy=vy/len,nx=-uy,ny=ux;
   const hl=.42,hw=.27,w=.085;const base=[B[0]-ux*hl,B[1]-uy*hl];
-  const start=corner?A:[A[0]+ux*.22,A[1]+uy*.22];
-  let shaft='M'+start[0]+' '+start[1]+(corner?' L'+corner[0]+' '+corner[1]:'')+' L'+base[0]+' '+base[1];
-  if(corner){/* start offset along first leg */const lx=corner[0]-A[0],ly=corner[1]-A[1],ll=Math.hypot(lx,ly);shaft='M'+(A[0]+lx/ll*.22)+' '+(A[1]+ly/ll*.22)+' L'+corner[0]+' '+corner[1]+' L'+base[0]+' '+base[1]}
+  let shaft;
+  if(corner){const lx=corner[0]-A[0],ly=corner[1]-A[1],ll=Math.hypot(lx,ly);shaft='M'+(A[0]+lx/ll*.22)+' '+(A[1]+ly/ll*.22)+' L'+corner[0]+' '+corner[1]+' L'+base[0]+' '+base[1]}
+  else shaft='M'+(A[0]+ux*.22)+' '+(A[1]+uy*.22)+' L'+base[0]+' '+base[1];
   const head=[[base[0]+nx*hw,base[1]+ny*hw],B,[base[0]-nx*hw,base[1]-ny*hw]].map(p=>p.join(',')).join(' ');
-  return '<path d="'+shaft+'" fill="none" stroke="'+color+'" stroke-width="'+(w*2)+'" stroke-linejoin="round"/><polygon points="'+head+'" fill="'+color+'"/>';
+  const o=op==null?.82:op;
+  return '<g opacity="'+o+'"><path d="'+shaft+'" fill="none" stroke="'+color+'" stroke-width="'+(w*2)+'" stroke-linejoin="round"/><polygon points="'+head+'" fill="'+color+'"/></g>';
 }
+let annUnder=null;
 function drawAnn(){
+  if(!annUnder){annUnder=document.createElementNS('http://www.w3.org/2000/svg','svg');annUnder.setAttribute('viewBox','0 0 8 8');annUnder.setAttribute('preserveAspectRatio','none');annUnder.id='annUnder';piecesEl.parentNode.insertBefore(annUnder,piecesEl)}
+  let u='';for(const [i,c] of ann.marks){const [x,y]=colRow(i);u+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="'+c+'" opacity=".62"/>'}
+  annUnder.innerHTML=u;
   let h='';
-  for(const i of ann.circles){const [c,r]=colRow(i);h+='<circle cx="'+(c+.5)+'" cy="'+(r+.5)+'" r=".44" fill="none" stroke="rgba(227,164,60,.9)" stroke-width=".075"/>'}
-  for(const [,v] of ann.arrows)h+=arrowSvg(v[0],v[1],'rgba(227,150,40,.82)');
-  if(ann.hint)h+=arrowSvg(ann.hint[0],ann.hint[1],'rgba(110,190,95,.88)');
+  for(const [i,c] of ann.frames){const [x,y]=colRow(i);h+='<rect x="'+(x+.05)+'" y="'+(y+.05)+'" width=".9" height=".9" rx=".07" fill="none" stroke="'+c+'" stroke-width=".07"'+(i===shiftStart?' stroke-dasharray=".18 .1"':'')+'/>'}
+  for(const [i,c] of ann.circles){const [x,y]=colRow(i);h+='<circle cx="'+(x+.5)+'" cy="'+(y+.5)+'" r=".44" fill="none" stroke="'+c+'" stroke-width=".075" opacity=".9"/>'}
+  for(const [,v] of ann.arrows)h+=arrowSvg(v.a,v.b,v.c);
+  if(ann.best)h+=arrowSvg(ann.best[0],ann.best[1],'#3f9e5a',.75);
+  if(ann.hint)h+=arrowSvg(ann.hint[0],ann.hint[1],'#6ebe5f',.88);
   annEl.innerHTML=h;
 }
 
@@ -1576,11 +1672,11 @@ boardEl.addEventListener('pointerdown',e=>{
   const sq=sqAt(e);if(sq<0)return;
   if(e.button===2){rightStart=sq;e.preventDefault();return}
   if(e.button!==0)return;
-  if(e.shiftKey){e.preventDefault();if(shiftStart<0)shiftStart=sq;else{if(shiftStart!==sq)toggleArrow(shiftStart,sq);shiftStart=-1}paint();return}
+  if(e.shiftKey){e.preventDefault();shiftClick(sq);return}
   if(e.ctrlKey||e.metaKey){e.preventDefault();toggleCircle(sq);return}
   if(e.altKey){e.preventDefault();toggleMark(sq);return}
   if(Admin.on&&Admin.edit&&G.cfg&&!G.over){e.preventDefault();Admin.paint(sq);return}
-  if(shiftStart>=0){shiftStart=-1;paint()}
+  if(shiftStart>=0){shiftStart=-1;drawAnn()}
   if(G.view>=0&&G.view!==G.states.length-1){G.view=-1;renderAll(true);return}
   const s=cur();if(!s)return;
   if(sel>=0&&sel!==sq&&targetsOf(sel).includes(sq)){tryMove(sel,sq,true);return}
@@ -1641,20 +1737,20 @@ document.addEventListener('keydown',e=>{
   const ctrl=e.ctrlKey||e.metaKey;
   if(ctrl&&k==='s'){e.preventDefault();if(e.shiftKey&&currentView==='play'){clearAnn();toast('All marks cleared')}return}
   if(currentView!=='play')return;
-  if(ctrl&&k==='z'){e.preventDefault();if(e.shiftKey||held.has('s')){clearAnn();toast('All marks cleared')}else undo();return}
+  if(ctrl&&k==='z'){e.preventDefault();if(e.shiftKey||held.has('s')){clearAnn();toast('All marks cleared')}else if(!undoAnn())toast('No marks to undo. Use the ↶ button to take back a move.');return}
   if(ctrl)return;
   if(k==='arrowleft'){e.preventDefault();step(-1)}
   else if(k==='arrowright'){e.preventDefault();step(1)}
   else if(k===' '){e.preventDefault();toggleReplay()}
   else if(k==='f'){flip()}
-  else if(k==='escape'){sel=-1;shiftStart=-1;closePromo();paint()}
+  else if(k==='escape'){sel=-1;shiftStart=-1;closePromo();paint();drawAnn()}
 });
 document.addEventListener('keyup',e=>{const k=e.key.toLowerCase();held.delete(k);if(k==='control'||k==='meta')held.clear()});
 window.addEventListener('blur',()=>held.clear());
 
 /* ---------------- game flow ---------------- */
 function newGame(cfg){
-  stopReplay();$('#pzBar').hidden=cfg.opp!=='puzzle';if(cfg.opp!=='puzzle')Puzzles.cur=null;$('#bDraw').hidden=$('#bResign').hidden=cfg.opp==='puzzle';Admin.onNewGame();
+  stopReplay();if(window.TempoPro)resetAnalysis();lastViewPly=-1;$('#pzBar').hidden=cfg.opp!=='puzzle';if(cfg.opp!=='puzzle')Puzzles.cur=null;$('#bDraw').hidden=$('#bResign').hidden=cfg.opp==='puzzle';Admin.onNewGame();
   gameMods=cfg.modList;imgCache={};
   E.setMods(cfg.emods);
   G.cfg=cfg;G.states=[cfg.start];G.moves=[];G.sans=[];G.keys=[E.key(cfg.start)];G.over=null;G.view=-1;G.token++;G.thinking=false;
@@ -1665,7 +1761,7 @@ function newGame(cfg){
   G.legal=E.legal(cfg.start);
   $('#ruleMsg').hidden=true;
   flipped=G.myColor==='b';layoutSquares();
-  sel=-1;closePromo();ann.arrows.clear();ann.circles.clear();ann.marks.clear();ann.hint=null;shiftStart=-1;
+  sel=-1;closePromo();ann.arrows.clear();ann.circles.clear();ann.marks.clear();ann.frames.clear();ann.stack=[];ann.hint=null;ann.best=null;shiftStart=-1;
   $('#result').classList.remove('on');$('#drawOffer').hidden=true;$('#rematchOffer').hidden=true;
   resetPieces();renderAll(false);showTab('game');
   $('#chat').hidden=cfg.opp!=='online';
@@ -1729,7 +1825,7 @@ async function play(m,opts){
   G.states.push(ns);G.moves.push(m);G.sans.push(san);G.keys.push(E.key(ns));G.legal=E.legal(ns);
   G.view=-1;sel=-1;closePromo();
   const byOpponent=G.cfg.opp==='local'||mover!==G.myColor;
-  if(byOpponent){ann.arrows.clear();ann.circles.clear();ann.marks.clear();shiftStart=-1}
+  if(byOpponent){ann.arrows.clear();ann.circles.clear();ann.marks.clear();ann.frames.clear();ann.stack=[];shiftStart=-1}
   ann.hint=null;
   const k=G.keys[G.keys.length-1],rep=G.keys.filter(x=>x===k).length;
   const o=hookResult||studioOutcome(ns,mover)||E.outcome(ns,G.legal,rep);
@@ -1858,7 +1954,7 @@ function renderMoves(){
   const box=$('#moves');box.innerHTML='';const vp=viewPly();
   for(let i=0;i<G.sans.length;i+=2){
     const n=document.createElement('div');n.className='n';n.textContent=(i/2+1)+'.';box.appendChild(n);
-    for(const j of [i,i+1]){const b=document.createElement('button');if(j<G.sans.length){b.textContent=G.sans[j];if(vp===j+1)b.className='cur';b.onclick=()=>{G.view=j+1===G.states.length-1?-1:j+1;sel=-1;renderAll(true)}}else b.disabled=true;box.appendChild(b)}
+    for(const j of [i,i+1]){const b=document.createElement('button');if(j<G.sans.length){b.textContent=G.sans[j];if(window.TempoPro&&ANA.on&&ANA.cls&&ANA.cls[j]){const c=CLS[ANA.cls[j]];const t=document.createElement('sup');t.textContent=c[0];t.style.color=c[2];t.title=c[1];b.appendChild(t)}if(vp===j+1)b.className='cur';b.onclick=()=>{G.view=j+1===G.states.length-1?-1:j+1;sel=-1;renderAll(true)}}else b.disabled=true;box.appendChild(b)}
   }
   const c=box.querySelector('.cur');if(c&&G.view<0)box.scrollTop=box.scrollHeight;
 }
@@ -1870,6 +1966,7 @@ function renderStatus(){
   const mi=[MODES[G.cfg.mode][0]+(G.cfg.mapName?' · '+G.cfg.mapName:'')];
   if(G.cfg.mode==='three')mi.push('Checks given: White '+s.checks.w+' · Black '+s.checks.b);
   if(G.cfg.mode==='koth')mi.push('Hill: d4, e4, d5, e5');
+  if(window.TempoPro){const op=openingName();if(op)mi.push(op)}
   info.textContent=mi.join('  ·  ');info.hidden=false;
   if(G.over&&G.over.result==='*'){t.textContent=G.over.reason;return}
   if(G.over){t.textContent=(G.over.winner?(G.over.winner==='w'?'White':'Black')+' won':'Draw')+' — '+G.over.reason;return}
@@ -1941,7 +2038,7 @@ $('#drawNo').onclick=()=>{$('#drawOffer').hidden=true};
 $('#rematchYes').onclick=()=>{$('#rematchOffer').hidden=true;Online.rematch()};
 
 /* ---------------- online ---------------- */
-const TEMPO_BUILD=17;
+const TEMPO_BUILD=18;
 const NET_PREFIX='tempo-chess-v2/',PEER_PREFIX='tempo-chess-v2-';
 const BROKERS=window.TEMPO_BROKERS||['wss://broker.emqx.io:8084/mqtt','wss://broker.hivemq.com:8884/mqtt'];
 const topicMatch=(pat,t)=>{const a=pat.split('/'),b=t.split('/');if(a.length!==b.length)return false;for(let i=0;i<a.length;i++)if(a[i]!=='+'&&a[i]!==b[i])return false;return true};
@@ -4278,7 +4375,7 @@ const Puzzles={cur:null,
   hint(){
     const c=this.cur;if(!c||G.over)return;
     const ks=PZ.keys(cur(),c.left);if(!ks.length)return;const m=ks[0];
-    if(!c.hinted){c.hinted=true;ann.hint=null;ann.circles.clear();ann.circles.add(m.from);drawAnn();toast('Hint: move this piece')}
+    if(!c.hinted){c.hinted=true;ann.hint=null;ann.circles.clear();ann.circles.set(m.from,'#6ebe5f');drawAnn();toast('Hint: move this piece')}
     else{ann.hint=[m.from,m.castle?m.kTo:m.to];drawAnn();toast('Hint: here\'s the move')}
   },
   grid(){
@@ -4297,7 +4394,7 @@ $('#dpPlay').onclick=()=>Puzzles.start(Puzzles.dayIndex());
 const QUESTS={
   win_bot:['Beat any bot in chess',1],win_bot_hard:['Beat Basalt or a stronger bot',1],play_online:['Finish an online chess game',1],
   puzzles:['Solve 3 puzzles',3],daily_puzzle:['Solve the daily puzzle',1],captures:['Capture 15 pieces in chess',15],
-  checks:['Give check 8 times',8],checkers_win:['Win a game of checkers',1],checkers_play:['Finish 2 games of checkers',2],
+  checks:['Give check 8 times',8],sprint:['Score 15 in Square Sprint',1],knight:['Finish a Knight Rush',1],analyze:['Analyze one of your games',1],checkers_win:['Win a game of checkers',1],checkers_play:['Finish 2 games of checkers',2],
   mode_game:['Finish a chess game in a special mode',1],studio:['Play a Game Studio or store game',1]
 };
 const Quests={
@@ -4660,6 +4757,156 @@ $('#ckAgain').onclick=()=>{$('#ckResult').classList.remove('on');if(CK.cfg&&CK.c
 $$('#ckAdmin [data-ckfx]').forEach(b=>b.onclick=()=>CK.fx(b.dataset.ckfx));
 
 window.TempoCK=true;
+/* ================= PRO TOOLS: openings, analysis, engine, PGN ================= */
+const OPENINGS={
+  'e4':"King's Pawn Opening",'d4':"Queen's Pawn Opening",'c4':'English Opening','Nf3':'Réti Opening','g3':"King's Fianchetto Opening",'b3':'Nimzowitsch-Larsen Attack','f4':"Bird's Opening",
+  'e4 e5':"King's Pawn Game",'e4 e5 Nf3 Nc6 Bb5':'Ruy Lopez','e4 e5 Nf3 Nc6 Bc4':'Italian Game','e4 e5 Nf3 Nc6 Bc4 Bc5':'Giuoco Piano','e4 e5 Nf3 Nc6 Bc4 Nf6':'Two Knights Defense',
+  'e4 e5 Nf3 Nc6 d4':'Scotch Game','e4 e5 Nf3 Nc6 Nc3 Nf6':'Four Knights Game','e4 e5 Nf3 Nf6':'Petrov Defense','e4 e5 Nf3 d6':'Philidor Defense','e4 e5 f4':"King's Gambit",
+  'e4 e5 Nc3':'Vienna Game','e4 e5 Bc4':"Bishop's Opening",'e4 e5 d4':'Center Game','e4 e5 d4 exd4 c3':'Danish Gambit',
+  'e4 c5':'Sicilian Defense','e4 c5 Nf3 d6 d4 cxd4 Nxd4 Nf6 Nc3 a6':'Sicilian Najdorf','e4 c5 Nf3 d6 d4 cxd4 Nxd4 Nf6 Nc3 g6':'Sicilian Dragon','e4 c5 c3':'Sicilian Alapin','e4 c5 Nc3':'Closed Sicilian',
+  'e4 e6':'French Defense','e4 c6':'Caro-Kann Defense','e4 d5':'Scandinavian Defense','e4 d6':'Pirc Defense','e4 g6':'Modern Defense','e4 Nf6':"Alekhine's Defense",
+  'd4 d5':"Queen's Pawn Game",'d4 d5 c4':"Queen's Gambit",'d4 d5 c4 e6':"Queen's Gambit Declined",'d4 d5 c4 dxc4':"Queen's Gambit Accepted",'d4 d5 c4 c6':'Slav Defense','d4 d5 Bf4':'London System',
+  'd4 Nf6':'Indian Defense','d4 Nf6 Bf4':'London System','d4 Nf6 c4 g6':"King's Indian Defense",'d4 Nf6 c4 g6 Nc3 d5':'Grünfeld Defense','d4 Nf6 c4 e6 Nc3 Bb4':'Nimzo-Indian Defense',
+  'd4 Nf6 c4 e6 Nf3 b6':"Queen's Indian Defense",'d4 Nf6 c4 c5':'Benoni Defense','d4 f5':'Dutch Defense'
+};
+function openingName(){
+  if(!G.cfg||G.cfg.mode!=='standard'||G.cfg.game||G.cfg.mapName||G.cfg.opp==='puzzle')return '';
+  if(G.states[0].b.join()!==CLASSIC.join())return '';
+  const seq=G.sans.slice(0,12).map(x=>x.replace(/[+#]/g,''));let name='';
+  for(let n=1;n<=seq.length;n++){const k=seq.slice(0,n).join(' ');if(OPENINGS[k])name=OPENINGS[k]}
+  return name;
+}
+const ANA={on:false,running:false,evals:null,best:null,cls:null,acc:null,engine:false,liveTok:0};
+const CLS={book:['📖','Book move','#a796d4'],best:['★','Best','#3f9e5a'],good:['✓','Good','#86b36b'],inacc:['?!','Inaccuracy','#e3c43c'],mistake:['?','Mistake','#e3962a'],blunder:['??','Blunder','#d7594c']};
+const wp=cp=>50+50*(2/(1+Math.exp(-0.004*cp))-1);
+function evalOf(s,r){
+  const ms=E.legal(s);
+  if(!ms.length)return E.inCheck(s)?(s.turn==='w'?-2000:2000):0;
+  let sc=r?r.score:0;if(Math.abs(sc)>90000)sc=Math.sign(sc)*2000;sc=Math.max(-2000,Math.min(2000,sc));
+  return s.turn==='w'?sc:-sc;
+}
+function canAnalyze(){return G.cfg&&G.cfg.opp!=='puzzle'&&G.moves.length>0&&(G.over||G.cfg.opp==='local')}
+async function analyzeGame(){
+  if(ANA.running)return;if(!canAnalyze()){toast(G.cfg&&G.cfg.opp==='puzzle'?'Puzzles can\'t be analyzed':'Finish the game first, then analyze it');return}
+  ANA.running=true;const n=G.states.length,evals=[],best=[],btn=$('#bAnalyze');btn.disabled=true;
+  for(let i=0;i<n;i++){btn.textContent='Analyzing '+Math.round(i/n*100)+'%';const s=G.states[i];
+    const r=E.legal(s).length?await think(s,G.cfg.emods,{depth:5,time:450}):null;evals.push(evalOf(s,r));best.push(r&&r.move||null)}
+  const cls=[],loss={w:[],b:[]};let bookLen=0;
+  if(G.cfg.mode==='standard'&&G.states[0].b.join()===CLASSIC.join()){const seq=G.sans.map(x=>x.replace(/[+#]/g,''));for(let k=1;k<=Math.min(12,seq.length);k++)if(OPENINGS[seq.slice(0,k).join(' ')])bookLen=k}
+  for(let i=0;i<G.moves.length;i++){const mover=G.states[i].turn,sg=mover==='w'?1:-1,before=evals[i]*sg,after=evals[i+1]*sg,l=Math.max(0,before-after),m=G.moves[i],b=best[i];
+    let c;if(i<bookLen)c='book';else if(b&&b.from===m.from&&b.to===m.to&&(b.promo||null)===(m.promo||null))c='best';else c=l<=70?'good':l<=150?'inacc':l<=300?'mistake':'blunder';
+    cls.push(c);loss[mover].push(c==='book'?0:Math.max(0,wp(before)-wp(after)))}
+  const acc=s=>loss[s].length?Math.round(loss[s].reduce((a,x)=>a+Math.max(0,100-x*2.2),0)/loss[s].length):null;
+  Object.assign(ANA,{on:true,running:false,evals,best,cls,acc:{w:acc('w'),b:acc('b')}});
+  btn.disabled=false;btn.textContent='📈 Analyze';Quests.bump('analyze');
+  if(G.view<0)G.view=0;renderAll(false);anaBox();
+}
+function anaBox(){
+  const box=$('#anaBox');if(!box)return;
+  if(!ANA.on){box.hidden=true;return}box.hidden=false;
+  const cnt=(c,side)=>ANA.cls.filter((x,i)=>x===c&&G.states[i].turn===side).length;
+  box.innerHTML='';
+  for(const side of ['w','b']){const r=document.createElement('div');r.className='ana-row';
+    r.innerHTML='<b></b><span class="acc"></span><span class="ana-c" style="color:'+CLS.blunder[2]+'"></span><span class="ana-c" style="color:'+CLS.mistake[2]+'"></span><span class="ana-c" style="color:'+CLS.inacc[2]+'"></span>';
+    r.querySelector('b').textContent=nameFor(side)[0];r.querySelector('.acc').textContent=(ANA.acc[side]==null?'–':ANA.acc[side]+'%');
+    const cs=r.querySelectorAll('.ana-c');cs[0].textContent=cnt('blunder',side)+' ??';cs[1].textContent=cnt('mistake',side)+' ?';cs[2].textContent=cnt('inacc',side)+' ?!';cs[0].title='Blunders';cs[1].title='Mistakes';cs[2].title='Inaccuracies';box.appendChild(r)}
+  const h=document.createElement('div');h.className='hint-t';h.textContent='Accuracy, then blunders ??, mistakes ? and inaccuracies ?!. Click a move to see the engine\'s best move in green.';box.appendChild(h);
+}
+function evalBar(){
+  const bar=$('#evalBar');if(!bar)return;
+  const vp=viewPly();let ev=null;
+  if(ANA.on&&ANA.evals&&ANA.evals[vp]!=null)ev=ANA.evals[vp];else if(ANA.engine&&ANA.live&&ANA.live.ply===vp)ev=ANA.live.ev;
+  if(ev==null||!(ANA.on||ANA.engine)){bar.hidden=true;return}
+  bar.hidden=false;const w=wp(ev);bar.querySelector('i').style.width=(flipped?100-w:w)+'%';bar.classList.toggle('flip',flipped);
+  bar.querySelector('span').textContent=Math.abs(ev)>=1900?(ev>0?'White mates':'Black mates'):(ev>0?'+':'')+(ev/100).toFixed(1);
+}
+function showBest(){
+  ann.best=null;const vp=viewPly();
+  if(ANA.on&&ANA.best&&vp>0){const b=ANA.best[vp-1];const m=G.moves[vp-1];if(b&&!(b.from===m.from&&b.to===m.to))ann.best=[b.from,b.to]}
+  else if(ANA.engine&&ANA.live&&ANA.live.ply===vp&&ANA.live.move)ann.best=[ANA.live.move.from,ANA.live.move.to];
+  drawAnn();
+}
+async function liveEngine(){
+  if(!ANA.engine)return;const vp=viewPly(),s=G.states[vp];if(!s)return;const tok=++ANA.liveTok;
+  if(!E.legal(s).length){ANA.live={ply:vp,ev:evalOf(s,null),move:null};evalBar();showBest();return}
+  const r=await think(s,G.cfg.emods,{depth:6,time:700});if(tok!==ANA.liveTok)return;
+  ANA.live={ply:vp,ev:evalOf(s,r),move:r&&r.move};evalBar();showBest();
+}
+function toggleEngine(){
+  if(!ANA.engine&&!canAnalyze()&&!(G.cfg&&G.cfg.opp==='local')){toast('The engine is available after the game, or in Friend mode');return}
+  ANA.engine=!ANA.engine;$('#bEngine').classList.toggle('pri',ANA.engine);if(!ANA.engine){ANA.live=null;ann.best=null;drawAnn()}evalBar();liveEngine();
+}
+function resetAnalysis(){Object.assign(ANA,{on:false,running:false,evals:null,best:null,cls:null,acc:null,engine:false,live:null});ann.best=null;const b=$('#bEngine');if(b)b.classList.remove('pri');const ab=$('#bAnalyze');if(ab){ab.disabled=false;ab.textContent='📈 Analyze'}anaBox();evalBar()}
+
+/* PGN */
+function fenOf(s){
+  let rows=[];for(let r=0;r<8;r++){let row='',e=0;for(let c=0;c<8;c++){const p=s.b[r*8+c];if(!p||p[0]==='n'||!SHAPES[p[1]]||p[1]==='@'){e++;continue}if(e){row+=e;e=0}row+=p[0]==='w'?p[1]:p[1].toLowerCase()}if(e)row+=e;rows.push(row)}
+  let cr='';if(s.castle.w[1]>=0)cr+='K';if(s.castle.w[0]>=0)cr+='Q';if(s.castle.b[1]>=0)cr+='k';if(s.castle.b[0]>=0)cr+='q';
+  return rows.join('/')+' '+s.turn+' '+(cr||'-')+' '+(s.ep>=0?E.sqName(s.ep):'-')+' '+s.half+' '+s.full;
+}
+function pgnText(){
+  if(!G.cfg)return '';const d=new Date(),res=G.over?(G.over.result==='*'?'*':G.over.result.replace('1/2','1/2-1/2')):'*';
+  const tag=(k,v)=>'['+k+' "'+String(v).replace(/"/g,"'")+'"]\n';
+  let h=tag('Event','Tempo · '+MODES[G.cfg.mode][0])+tag('Site','Tempo')+tag('Date',d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'))+tag('White',nameFor('w')[0].replace(' (you)',''))+tag('Black',nameFor('b')[0].replace(' (you)',''))+tag('Result',res);
+  if(G.cfg.mode!=='standard')h+=tag('Variant',MODES[G.cfg.mode][0]);
+  const op=openingName();if(op)h+=tag('Opening',op);
+  if(G.states[0].b.join()!==CLASSIC.join()||G.cfg.mode==='960')h+=tag('SetUp','1')+tag('FEN',fenOf(G.states[0]));
+  let mv='',num=G.states[0].full;const blackFirst=G.states[0].turn==='b';
+  G.sans.forEach((s,i)=>{const white=(i%2===0)!==blackFirst;if(white)mv+=num+'. ';else if(i===0)mv+=num+'... ';mv+=s+' ';if(!white)num++});
+  return h+'\n'+(mv+res).replace(/(.{1,78})(\s|$)/g,'$1\n').trim()+'\n';
+}
+$('#bPgnCopy').onclick=()=>{const t=pgnText();if(!t)return;navigator.clipboard.writeText(t).then(()=>toast('PGN copied'),()=>{modal('PGN',(()=>{const ta=document.createElement('textarea');ta.rows=10;ta.value=t;ta.readOnly=true;return ta})())})};
+$('#bPgnSave').onclick=()=>{const t=pgnText();if(!t)return;saveFile('tempo-game-'+Date.now().toString(36)+'.pgn',t)};
+$('#bAnalyze').onclick=()=>analyzeGame();
+$('#bEngine').onclick=()=>toggleEngine();
+
+/* marking colours */
+function setAnnColors(o){settings.annColors=Object.assign({},ANN_DEF,settings.annColors||{},o);saveSettings();fillAnnColors()}
+function fillAnnColors(){for(const k of ['arrow','circle','frame','mark']){const el=$('#ac_'+k);if(el)el.value=annColor(k)}
+  $$('#annPal button').forEach(b=>b.classList.toggle('on',['arrow','circle','frame','mark'].every(k=>annColor(k)===b.dataset.c)))}
+for(const k of ['arrow','circle','frame','mark']){const el=$('#ac_'+k);if(el)el.addEventListener('input',()=>setAnnColors({[k]:el.value}))}
+$('#ac_all').addEventListener('input',e=>{const c=e.target.value;setAnnColors({arrow:c,circle:c,frame:c,mark:c})});
+$('#ac_reset').onclick=()=>{settings.annColors=Object.assign({},ANN_DEF);saveSettings();fillAnnColors();toast('Colors reset')};
+(()=>{const box=$('#annPal');['#e3962a','#d64034','#3f9e5a','#3a7fd1','#8a54c9','#f2cf43','#e06aa4','#1d1a16'].forEach(c=>{const b=document.createElement('button');b.dataset.c=c;b.style.background=c;b.title='Use this color for all marks';b.setAttribute('aria-label','Mark color '+c);b.onclick=()=>setAnnColors({arrow:c,circle:c,frame:c,mark:c});box.appendChild(b)});fillAnnColors()})();
+
+/* ================= MINIGAMES ================= */
+function mgBoard(el,onSq){
+  el.innerHTML='';for(let i=0;i<64;i++){const d=document.createElement('div');d.className='mg-sq'+(((i>>3)+(i&7))%2?' d':'');d.dataset.i=i;el.appendChild(d)}
+  el.onpointerdown=e=>{const t=e.target.closest('.mg-sq');if(t)onSq(+t.dataset.i,t)};
+}
+const Sprint={t:0,score:0,target:-1,black:false,end:0,
+  vis(i){return this.black?63-i:i},
+  name(i){return 'abcdefgh'[i&7]+(8-(i>>3))},
+  init(){mgBoard($('#spBoard'),(v,el)=>this.click(v,el));$('#spBest').textContent=LS.get('sprintBest',0)},
+  start(){this.black=$('#spSide').value==='b';this.score=0;this.end=Date.now()+30000;this.next();$('#spStart').textContent='Restart';clearInterval(this.t);this.t=setInterval(()=>this.tick(),100);this.tick();$('#spBoard').classList.toggle('blk',this.black);this.labels()},
+  labels(){const box=$('#spBoard');[...box.children].forEach((d,v)=>{const i=this.vis(v);d.dataset.n=$('#spCoords').checked?this.name(i):''})},
+  next(){let n;do{n=Math.random()*64|0}while(n===this.target);this.target=n;$('#spTarget').textContent=this.name(n)},
+  tick(){const left=Math.max(0,this.end-Date.now());$('#spTime').textContent=(left/1000).toFixed(1)+'s';$('#spScore').textContent=this.score;
+    if(left<=0){clearInterval(this.t);this.t=0;this.target=-1;$('#spTarget').textContent='Time!';const best=LS.get('sprintBest',0);if(this.score>best){LS.set('sprintBest',this.score);$('#spBest').textContent=this.score;toast('New best: '+this.score+'!');confetti(2000)}snd('end');if(this.score>=15)Quests.bump('sprint')}},
+  click(v,el){if(!this.t||this.target<0)return;const i=this.vis(v);
+    if(i===this.target){this.score++;el.classList.remove('ok');void el.offsetWidth;el.classList.add('ok');snd('move');this.next()}
+    else{el.classList.remove('bad');void el.offsetWidth;el.classList.add('bad');snd('tick')}}
+};
+const KR={pos:0,star:0,got:0,moves:0,t0:0,t:0,el:null,
+  init(){mgBoard($('#krBoard'),(i)=>this.click(i));const k=document.createElement('img');k.className='kr-knight';k.alt='';k.src=svgPiece('N','w');$('#krBoard').appendChild(k);this.el=k;
+    const s=document.createElement('div');s.className='kr-star';s.textContent='★';$('#krBoard').appendChild(s);this.starEl=s;const b=LS.get('knightBest',0);$('#krBest').textContent=b?(b/1000).toFixed(1)+'s':'–';this.place();},
+  jumps(i){const r=i>>3,c=i&7,o=[];for(const [dr,dc] of [[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]]){const R=r+dr,C=c+dc;if(R>=0&&R<8&&C>=0&&C<8)o.push(R*8+C)}return o},
+  start(){this.pos=Math.random()*64|0;this.got=0;this.moves=0;this.newStar();this.t0=Date.now();clearInterval(this.t);this.t=setInterval(()=>this.tick(),100);$('#krStart').textContent='Restart';this.place();this.tick()},
+  newStar(){let s;do{s=Math.random()*64|0}while(s===this.pos||this.jumps(this.pos).includes(s));this.star=s},
+  place(){const at=(el,i)=>{el.style.transform='translate('+((i&7)*100)+'%,'+((i>>3)*100)+'%)'};at(this.el,this.pos);at(this.starEl,this.star);this.starEl.hidden=!this.t;
+    const js=this.t?this.jumps(this.pos):[];[...$('#krBoard').querySelectorAll('.mg-sq')].forEach(d=>d.classList.toggle('t',js.includes(+d.dataset.i)))},
+  tick(){$('#krTime').textContent=((Date.now()-this.t0)/1000).toFixed(1)+'s';$('#krGot').textContent=this.got+' / 10';$('#krMoves').textContent=this.moves},
+  click(i){if(!this.t||!this.jumps(this.pos).includes(i))return;this.pos=i;this.moves++;snd('move');
+    if(i===this.star){this.got++;snd('cap');if(this.got>=10){clearInterval(this.t);this.t=0;const ms=Date.now()-this.t0,b=LS.get('knightBest',0);this.tick();
+      if(!b||ms<b){LS.set('knightBest',ms);$('#krBest').textContent=(ms/1000).toFixed(1)+'s';toast('New best time!');confetti(2000)}snd('end');Quests.bump('knight')}else this.newStar()}
+    this.place();this.tick()}
+};
+$('#spStart').onclick=()=>Sprint.start();$('#spCoords').onchange=()=>Sprint.labels();$('#spSide').onchange=()=>{Sprint.black=$('#spSide').value==='b';$('#spBoard').classList.toggle('blk',Sprint.black);Sprint.labels()};
+$('#krStart').onclick=()=>KR.start();
+$('#mgCheckers').onclick=()=>go('checkers');$('#mgPuzzles').onclick=()=>go('daily');
+let mgInit=false;
+
+window.TempoPro=true;
 /* ---------------- settings view ---------------- */
 function applyTheme(){const t=THEMES[settings.theme]||THEMES.walnut;document.documentElement.style.setProperty('--sq-l',t[1]);document.documentElement.style.setProperty('--sq-d',t[2])}
 function buildSettings(){
@@ -4678,6 +4925,8 @@ function go(v){currentView=v;$$('.nav').forEach(b=>b.classList.toggle('on',b.dat
   if(v==='store'){if(!Store.loaded)Store.load();else Store.render()}
   if(v==='checkers'){CK.build();CK.buildSetup();if(!CK.cfg)CK.tab('setup');else CK.renderAll(false);CK.adminUi()}
   if(v==='daily')Quests.render();
+  if(v==='games'&&!mgInit){mgInit=true;Sprint.init();KR.init()}
+  if(v==='settings')fillAnnColors();
   if(v==='studio'){renderStudio();if(!Studio.loaded)Studio.loadCommunity()}
   if(v==='profile'){Acct.render();renderFriends();loadLeaderboard()}
   if(v==='play'){imgCache={};if(G.cfg){resetPieces();renderAll(false)}}

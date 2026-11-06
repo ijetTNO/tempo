@@ -1,0 +1,143 @@
+rules_version = '2';
+// Tempo security rules. Paste this whole file into Firebase > Firestore Database > Rules, then press Publish.
+service cloud.firestore {
+  match /databases/{db}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function real() { return signedIn() && request.auth.token.firebase.sign_in_provider != 'anonymous'; }
+    function settings() {
+      return exists(/databases/$(db)/documents/config/settings)
+        ? get(/databases/$(db)/documents/config/settings).data : {};
+    }
+    // Hash of the admin password. Starts as the hash of 7715 until an admin changes it.
+    function pwHash() {
+      return exists(/databases/$(db)/documents/config/secret)
+        ? get(/databases/$(db)/documents/config/secret).data.pwHash
+        : 'aea1bf55db14b9feff4df4322d1ac88c1ad63d35a979317bc80b896bf33ac11c';
+    }
+    function isAdmin() {
+      return real()
+        && exists(/databases/$(db)/documents/admins/$(request.auth.uid))
+        && get(/databases/$(db)/documents/admins/$(request.auth.uid)).data.proof == pwHash();
+    }
+    function today() { return math.floor(request.time.toMillis() / 86400000); }
+    function userPath(uid) { return /databases/$(db)/documents/users/$(uid); }
+    function storePath(id) { return /databases/$(db)/documents/store/$(id); }
+
+    match /config/settings {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /config/secret {
+      allow read: if false;
+      allow create, update: if isAdmin()
+        && request.resource.data.keys().hasOnly(['pwHash', 'prev', 'at'])
+        && request.resource.data.prev == pwHash()
+        && request.resource.data.pwHash is string
+        && request.resource.data.pwHash.size() == 64;
+    }
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow create, update: if real() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['proof', 'at'])
+        && request.resource.data.proof == pwHash();
+      allow delete: if signedIn() && request.auth.uid == uid;
+    }
+
+    match /usernames/{name} {
+      allow read: if true;
+      allow create: if real()
+        && name.matches('^[a-z0-9_]{3,20}$')
+        && request.resource.data.keys().hasOnly(['uid'])
+        && request.resource.data.uid == request.auth.uid
+        && getAfter(userPath(request.auth.uid)).data.nameLower == name;
+      allow delete: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
+    match /users/{uid} {
+      allow read: if true;
+      allow create: if real() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['name', 'nameLower', 'roles', 'credits', 'lastDay', 'createdAt'])
+        && request.resource.data.name is string
+        && request.resource.data.name.matches('^[A-Za-z0-9_]{3,20}$')
+        && request.resource.data.nameLower == request.resource.data.name.lower()
+        && getAfter(/databases/$(db)/documents/usernames/$(request.resource.data.nameLower)).data.uid == uid
+        && request.resource.data.roles == []
+        && request.resource.data.credits == settings().get('startCredits', 100)
+        && request.resource.data.lastDay == today();
+      allow update: if isAdmin() || (signedIn() && request.auth.uid == uid && selfUpdate(uid));
+      allow delete: if isAdmin() || (signedIn() && request.auth.uid == uid);
+
+      function selfUpdate(uid) {
+        let d = request.resource.data;
+        let o = resource.data;
+        let keys = d.diff(o).affectedKeys();
+        return keys.hasOnly(['credits', 'lastDay', 'spend']) && (
+          // daily free credits, once per day
+          (keys.hasOnly(['credits', 'lastDay']) && o.lastDay < today() && d.lastDay == today()
+            && d.credits == o.credits + settings().get('dailyCredits', 100))
+          ||
+          // spending: publishing or buying in the same batch
+          (keys.hasOnly(['credits', 'spend']) && d.credits >= 0 && spendOk(uid, d, o))
+        );
+      }
+      function spendOk(uid, d, o) {
+        return d.spend.k == 'pub'
+          ? (!exists(storePath(d.spend.id)) && existsAfter(storePath(d.spend.id))
+             && getAfter(storePath(d.spend.id)).data.author == uid
+             && d.credits == o.credits - settings().get('publishCost', 10))
+          : (d.spend.k == 'buy'
+             && !exists(/databases/$(db)/documents/users/$(uid)/owned/$(d.spend.id))
+             && existsAfter(/databases/$(db)/documents/users/$(uid)/owned/$(d.spend.id))
+             && d.credits == o.credits - get(storePath(d.spend.id)).data.price);
+      }
+
+      match /owned/{id} {
+        allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+        allow create: if real() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['at', 'type'])
+          && exists(storePath(id))
+          && getAfter(userPath(uid)).data.spend.k == 'buy'
+          && getAfter(userPath(uid)).data.spend.id == id;
+        allow delete: if isAdmin();
+      }
+    }
+
+    match /store/{id} {
+      allow read: if true;
+      allow create: if real()
+        && request.resource.data.keys().hasOnly(['type', 'name', 'desc', 'price', 'data', 'author', 'authorName', 'at'])
+        && request.resource.data.author == request.auth.uid
+        && request.resource.data.type in ['map', 'piece', 'game']
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 30
+        && request.resource.data.desc is string && request.resource.data.desc.size() <= 300
+        && request.resource.data.price is int && request.resource.data.price >= 0
+        && request.resource.data.price <= settings().get('maxPrice', 500)
+        && request.resource.data.data is string && request.resource.data.data.size() < 900000
+        && settings().get('storeOpen', true) == true
+        && getAfter(userPath(request.auth.uid)).data.spend.k == 'pub'
+        && getAfter(userPath(request.auth.uid)).data.spend.id == id;
+      allow update: if isAdmin();
+      allow delete: if signedIn() && (resource.data.author == request.auth.uid || isAdmin());
+    }
+
+    match /kicks/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+    match /broadcast/{id} {
+      allow read: if true;
+      allow create, delete: if isAdmin();
+    }
+    match /live/{gid}/ev/{id} {
+      allow read: if true;
+      allow create: if isAdmin();
+    }
+    match /polls/{pid}/votes/{uid} {
+      allow read: if isAdmin();
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['o', 'at'])
+        && request.resource.data.o is int && request.resource.data.o >= 0 && request.resource.data.o < 4;
+    }
+  }
+}

@@ -1,0 +1,77 @@
+TEMPO ONLINE SETUP (Firebase, free)
+===================================
+About 15 minutes. You only do this once. Use a computer.
+
+Your tempo folder should contain:
+  index.html          the website
+  firebase-config.js  you paste your Firebase settings in here
+  firestore.rules     the security rules you paste into Firebase
+  FIREBASE-SETUP.txt  this guide
+
+
+STEP 1 - Make a Firebase project
+  1. Go to console.firebase.google.com and sign in with a Google account.
+  2. Press "Create a project" (or "Add project"). Name it, for example "tempo-chess".
+  3. Turn Google Analytics OFF (not needed). Press Create, then Continue.
+
+STEP 2 - Connect the website
+  1. On the project's home page press the web button that looks like </>.
+  2. Nickname: Tempo. Do NOT tick Firebase Hosting. Press "Register app".
+  3. Firebase shows code with "const firebaseConfig = { ... }".
+     Copy only the part from the first { to the last } (apiKey, authDomain, projectId, ...).
+  4. Open firebase-config.js in Notepad. Replace the word null with what you copied,
+     so the line becomes:   window.TEMPO_FIREBASE = { apiKey: "...", ... };
+     Save the file.
+
+STEP 3 - Make the database
+  1. Left menu: Build > Firestore Database > "Create database".
+  2. Pick a location near you (for Israel, a "europe-west" one is good). Press Next.
+  3. Choose "Start in production mode". Press Create.
+  4. Open the "Rules" tab. Delete everything in the box.
+  5. Open firestore.rules in Notepad, copy ALL of it, paste it into the box, press "Publish".
+
+STEP 4 - Turn on sign-in
+  Left menu: Build > Authentication > "Get started" > "Sign-in method" tab.
+  Turn these on one by one ("Add new provider"):
+  a) Anonymous ........ Enable > Save.  (Needed: guests use this.)
+  b) Email/Password ... Enable the first switch > Save.
+  c) Google ........... Enable, pick your email as support email > Save.
+  d) GitHub (optional)
+     - In the GitHub box in Firebase, copy the "callback URL"
+       (looks like https://YOUR-PROJECT.firebaseapp.com/__/auth/handler).
+     - On github.com: your picture > Settings > Developer settings > OAuth Apps > New OAuth App.
+       Name: Tempo. Homepage URL: your Netlify link. Authorization callback URL: paste it.
+       Press Register. Copy the Client ID, press "Generate a new client secret", copy it.
+     - Paste both into Firebase's GitHub box > Save.
+  e) Microsoft (optional)
+     - In Firebase's Microsoft box, copy the callback URL.
+     - Go to portal.azure.com > search "App registrations" > New registration.
+       Name: Tempo. Supported account types: "Accounts in any organizational directory
+       and personal Microsoft accounts". Redirect URI: choose "Web", paste the callback URL.
+       Press Register.
+     - Copy "Application (client) ID". Then "Certificates & secrets" > New client secret >
+       Add > copy the Value (not the ID).
+     - Paste both into Firebase's Microsoft box > Save.
+  If you skip GitHub or Microsoft, those buttons just say the method isn't turned on yet.
+
+STEP 5 - Allow your website
+  Authentication > Settings tab > Authorized domains > Add domain >
+  type your Netlify address without https://, e.g.  tempo-chess.netlify.app  > Add.
+
+STEP 6 - Upload
+  Drag the whole tempo folder (index.html AND firebase-config.js inside) onto
+  Netlify > your site > Deploys, like before.
+
+STEP 7 - Try it
+  1. Open your site. The bottom-left button says "Sign in". Sign in and pick your name.
+  2. Settings & Keys > Open admin panel > type 7715.
+  3. In the Admin panel, change the admin password right away (Admin password box).
+     Use something longer than 4 digits.
+  4. In "Site settings" you can change daily credits (100), starting credits (100),
+     publish cost (10), highest store price and the message of the day.
+
+Later updates: when I send a new index.html, only replace index.html.
+Keep your firebase-config.js. Then drag the folder to Netlify again.
+
+Free limits: Firebase's free plan allows about 50,000 reads and 20,000 writes per day,
+plenty for you and your friends.
